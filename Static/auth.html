@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Log in</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Courses App</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="/">Main</a></li>
+          <li><a href="/course">Add course</a></li>
+          <li><a href="/auth">Log in</a></li>
+      </ul>
+    </div>
+  </nav>
+<div class="container">
+    <h1>Log in</h1>
+    <form action="/login" method="POST" name="logForm">
+        <div class="input-field">
+            <input id="login" name="login" type="text" class="validate" required>
+            <label for="title">Login</label>
+            <span class="helper-text" data-error="Введите имя"></span>
+        </div>
+
+        <div class="input-field">
+            <input id="password" name="password" class="validate" required min=1>
+            <label for="price">password</label>
+            <span class="helper-text" data-error="Введите пароль"></span>
+        </div>
+
+        <button class="btn btn-primary">Login</button>
+    </form>
+</div>
+<script>
+  const form = document.querySelector('form');
+  console.dir(form);
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const json = JSON.stringify(Object.fromEntries(formData.entries()));
+    fetch('http://localhost:8001/auth', {
+      method: 'POST',
+      headers : {'Content-Type': 'application/json'},
+      body : json
+    })
+      .finally(form.reset());
+  });
+</script>
+</body>
+</html>
